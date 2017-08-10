@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.acesine.simpletodo.EditItemActivity">
+
+    <TextView
+        android:id="@+id/tvEditItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_item"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="20sp"
+        android:layout_below="@+id/tvEditItem"
+        android:layout_alignStart="@+id/tvEditItem" >
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:text="@string/btn_save"
+        android:onClick="onSave"
+        android:textSize="20sp"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/editText" />
+</RelativeLayout>
