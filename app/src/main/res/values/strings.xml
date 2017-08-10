@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleTodo</string>
+    <string name="app_name">ToDo</string>
     <string name="btn_add_item">Add Item</string>
     <string name="edit_new_item_hint">Enter a new item</string>
     <string name="edit_item">Edit Item Below:</string>
