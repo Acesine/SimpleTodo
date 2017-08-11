@@ -64,23 +64,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDIT_ITEM_REQUEST_CODE) {
-            if (resultCode == EditItemActivity.EDIT_ITEM_COMPLETE_CODE) {
-                int pos = data.getExtras().getInt(ITEM_POSITION);
-                TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
-                items.set(pos, newItem);
-                itemsAdapter.notifyDataSetChanged();
-                writeItems();
-            } else if (resultCode == EditItemActivity.EDIT_ITEM_CANCEL_CODE) {
-                // Do nothing
+            switch (resultCode) {
+                case EditItemActivity.EDIT_ITEM_COMPLETE_CODE:
+                    int pos = data.getExtras().getInt(ITEM_POSITION);
+                    TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
+                    items.set(pos, newItem);
+                    itemsAdapter.notifyDataSetChanged();
+                    writeItems();
+                    break;
+                case EditItemActivity.EDIT_ITEM_CANCEL_CODE:
+                    break;
+                case EditItemActivity.EDIT_ITEM_DELETE_CODE:
+                    pos = data.getExtras().getInt(ITEM_POSITION);
+                    if (!items.get(pos).delete()) {
+                        return;
+                    }
+                    items.remove(pos);
+                    itemsAdapter.notifyDataSetChanged();
+                    writeItems();
+                    break;
             }
         } else if (requestCode == ADD_ITEM_REQUEST_CODE) {
-            if (resultCode == AddItemActivity.ADD_ITEM_COMPLETE_CODE) {
-                TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
-                items.add(newItem);
-                itemsAdapter.notifyDataSetChanged();
-                writeItems();
-            } else if (resultCode == AddItemActivity.ADD_ITEM_CANCEL_CODE) {
-                // Do nothing
+            switch (resultCode) {
+                case AddItemActivity.ADD_ITEM_COMPLETE_CODE:
+                    TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
+                    items.add(newItem);
+                    itemsAdapter.notifyDataSetChanged();
+                    writeItems();
+                    break;
+                case AddItemActivity.ADD_ITEM_CANCEL_CODE:
+                    break;
             }
         }
     }

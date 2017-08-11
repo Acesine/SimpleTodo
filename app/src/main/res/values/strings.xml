@@ -5,5 +5,13 @@
     <string name="edit_item">Edit Item Below:</string>
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_delete">Delete</string>
     <string name="task_name">TaskName</string>
+    <string name="priority">Priority</string>
+
+    <string-array name="spinnerItems">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
 </resources>

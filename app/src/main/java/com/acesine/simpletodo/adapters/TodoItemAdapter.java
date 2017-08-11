@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.acesine.simpletodo.Constants;
 import com.acesine.simpletodo.R;
 import com.acesine.simpletodo.persistent.TodoItem;
 
@@ -25,6 +26,7 @@ public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
         }
         TextView itemName = (TextView) convertView.findViewById(R.id.item_name);
         itemName.setText(item.getItemName());
+        itemName.setBackgroundColor(Constants.PRIORITY_COLOR.get(item.getItemPriority()));
         return convertView;
     }
 }

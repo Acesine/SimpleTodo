@@ -7,13 +7,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.acesine.simpletodo.R;
 import com.acesine.simpletodo.persistent.TodoItem;
+import com.acesine.simpletodo.utils.SpinnerUtils;
 
 import java.util.UUID;
-
-import static com.acesine.simpletodo.activities.EditItemActivity.EDIT_ITEM_CANCEL_CODE;
 
 public class AddItemActivity extends AppCompatActivity {
     public final static int ADD_ITEM_COMPLETE_CODE = 1;
@@ -23,6 +23,8 @@ public class AddItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+
+        SpinnerUtils.setupPrioritySpinner(this, null);
     }
 
     @Override
@@ -37,8 +39,9 @@ public class AddItemActivity extends AppCompatActivity {
         int id = it.getItemId();
 
         if (id == R.id.save_item) {
-            String itemName = ((EditText) findViewById(R.id.etNewItem)).getText().toString();
-            TodoItem item = new TodoItem(UUID.randomUUID().toString(), itemName);
+            String itemName = ((EditText) findViewById(R.id.etAddItem)).getText().toString();
+            String priority = ((Spinner) findViewById(R.id.prioritySpinner)).getSelectedItem().toString();
+            TodoItem item = new TodoItem(UUID.randomUUID().toString(), itemName, priority);
             Intent result = new Intent();
             result.putExtra(MainActivity.ITEM_DATA, item);
             setResult(ADD_ITEM_COMPLETE_CODE, result);

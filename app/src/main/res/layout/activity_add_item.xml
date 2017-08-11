@@ -8,7 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/textView"
@@ -18,11 +19,34 @@
             android:text="@string/task_name" />
 
         <EditText
-            android:id="@+id/etNewItem"
+            android:id="@+id/etAddItem"
             android:hint="@string/edit_new_item_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/priorityTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="@string/priority" />
+        <Spinner
+            android:id="@+id/prioritySpinner"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:layout_weight="1"
+            android:entries="@array/spinnerItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

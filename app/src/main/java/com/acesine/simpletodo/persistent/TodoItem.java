@@ -19,17 +19,22 @@ public class TodoItem extends BaseModel implements Parcelable {
     @Column
     private String itemName;
 
+    @Column
+    private String itemPriority;
+
     protected TodoItem(android.os.Parcel in) {
         itemId = in.readString();
         itemName = in.readString();
+        itemPriority = in.readString();
     }
 
     // For Parceler
     public TodoItem() { }
 
-    public TodoItem(String itemId, String itemName) {
+    public TodoItem(String itemId, String itemName, String itemPriority) {
         this.itemId = itemId;
         this.itemName = itemName;
+        this.itemPriority = itemPriority;
     }
 
     public static final Creator<TodoItem> CREATOR = new Creator<TodoItem>() {
@@ -52,12 +57,20 @@ public class TodoItem extends BaseModel implements Parcelable {
         this.itemName = itemName;
     }
 
+    public void setItemPriority(String itemPriority) {
+        this.itemPriority = itemPriority;
+    }
+
     public String getItemId() {
         return itemId;
     }
 
     public String getItemName() {
         return itemName;
+    }
+
+    public String getItemPriority() {
+        return itemPriority;
     }
 
     @Override
@@ -69,5 +82,6 @@ public class TodoItem extends BaseModel implements Parcelable {
     public void writeToParcel(android.os.Parcel dest, int flags) {
         dest.writeString(itemId);
         dest.writeString(itemName);
+        dest.writeString(itemPriority);
     }
 }

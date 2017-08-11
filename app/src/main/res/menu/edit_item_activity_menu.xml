@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/save_item"
+        android:title="@string/btn_save"
+        android:icon="@mipmap/menu_save_item"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/cancel_item"
+        android:title="@string/btn_cancel"
+        android:icon="@mipmap/menu_cancel"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/delete_item"
+        android:title="@string/btn_delete"
+        android:icon="@mipmap/menu_delete"
+        app:showAsAction="ifRoom">
+    </item>
+</menu>
