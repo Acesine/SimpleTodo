@@ -1,6 +1,7 @@
 package com.acesine.simpletodo.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,18 @@ public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
         TextView itemName = (TextView) convertView.findViewById(R.id.item_name);
         itemName.setText(item.getItemName());
         itemName.setBackgroundColor(Constants.PRIORITY_COLOR.get(item.getItemPriority()));
+        itemName.setPaintFlags(0);
         TextView timeToDue = (TextView) convertView.findViewById(R.id.time_to_due);
         timeToDue.setBackgroundColor(Constants.PRIORITY_COLOR.get(item.getItemPriority()));
-        try {
-            timeToDue.setText(DateTimeUtils.getTimeToDue(Constants.DATE_FORMAT.parse(item.getItemDueDate())));
-        } catch (ParseException e) {
-            //
+        if (item.getItemPriority() == Constants.Priority.Done) {
+            timeToDue.setText(item.getItemPriority().name());
+            itemName.setPaintFlags(itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            try {
+                timeToDue.setText(DateTimeUtils.getTimeToDue(Constants.DATE_FORMAT.parse(item.getItemDueDate())));
+            } catch (ParseException e) {
+                //
+            }
         }
         return convertView;
     }

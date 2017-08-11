@@ -10,30 +10,26 @@ import android.widget.TextView;
 import com.acesine.simpletodo.Constants;
 import com.acesine.simpletodo.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SpinnerUtils {
     private SpinnerUtils() {}
 
-    public static void setupPrioritySpinner(Activity activity, String defaultPriority) {
-        if (defaultPriority == null) defaultPriority = Constants.PRIORITY.get(0);
+    public static void setupPrioritySpinner(Activity activity, Constants.Priority defaultPriority) {
         Spinner spinner = (Spinner) activity.findViewById(R.id.prioritySpinner);
-        ArrayAdapter<String> aa = new ArrayAdapter<>(activity,android.R.layout.simple_spinner_item, Constants.PRIORITY);
+        ArrayAdapter<Constants.Priority> aa = new ArrayAdapter<>(activity,android.R.layout.simple_spinner_item, Constants.PRIORITY);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(aa);
 
         spinner.setSelection(Constants.PRIORITY.indexOf(defaultPriority), true);
         for (int pos=0; pos<spinner.getChildCount(); ++pos) {
             View v = spinner.getSelectedView();
-            v.setBackgroundColor(Constants.PRIORITY_COLOR.get(((TextView) v).getText().toString()));
+            v.setBackgroundColor(Constants.PRIORITY_COLOR.get(Constants.Priority.valueOf(((TextView) v).getText().toString())));
         }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                view.setBackgroundColor(Constants.PRIORITY_COLOR.get(((TextView) view).getText().toString()));
+                view.setBackgroundColor(Constants.PRIORITY_COLOR.get(Constants.Priority.valueOf(((TextView) view).getText().toString())));
             }
 
             @Override

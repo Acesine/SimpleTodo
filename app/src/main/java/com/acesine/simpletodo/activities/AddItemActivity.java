@@ -54,7 +54,7 @@ public class AddItemActivity extends AppCompatActivity {
             int minute = tp.getMinute();
             String dueDate = Constants.DATE_FORMAT.format(new Date(year-1900, month, day, hour, minute));
             String creationDate = Constants.DATE_FORMAT.format(new Date());
-            TodoItem item = new TodoItem(UUID.randomUUID().toString(), itemName, priority, dueDate, creationDate);
+            TodoItem item = new TodoItem(UUID.randomUUID().toString(), itemName, Constants.Priority.valueOf(priority), dueDate, creationDate);
             Intent result = new Intent();
             result.putExtra(MainActivity.ITEM_DATA, item);
             setResult(ADD_ITEM_COMPLETE_CODE, result);

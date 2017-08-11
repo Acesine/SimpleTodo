@@ -74,7 +74,7 @@ public class EditItemActivity extends AppCompatActivity {
             int minute = tp.getMinute();
             String dueDate = Constants.DATE_FORMAT.format(new Date(year-1900, month, day, hour, minute));
             item.setItemName(newName);
-            item.setItemPriority(newPriority);
+            item.setItemPriority(Constants.Priority.valueOf(newPriority));
             item.setItemDueDate(dueDate);
             Intent result = new Intent();
             result.putExtra(MainActivity.ITEM_POSITION, getIntent().getExtras().getInt(MainActivity.ITEM_POSITION));

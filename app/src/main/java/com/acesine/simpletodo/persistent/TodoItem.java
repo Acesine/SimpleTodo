@@ -2,6 +2,8 @@ package com.acesine.simpletodo.persistent;
 
 import android.os.Parcelable;
 
+import com.acesine.simpletodo.Constants;
+import com.acesine.simpletodo.Constants.Priority;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -22,7 +24,7 @@ public class TodoItem extends BaseModel implements Parcelable {
     private String itemName;
 
     @Column
-    private String itemPriority;
+    private Priority itemPriority;
 
     @Column
     private String itemDueDate;
@@ -33,7 +35,7 @@ public class TodoItem extends BaseModel implements Parcelable {
     protected TodoItem(android.os.Parcel in) {
         itemId = in.readString();
         itemName = in.readString();
-        itemPriority = in.readString();
+        itemPriority = Priority.valueOf(in.readString());
         itemDueDate = in.readString();
         itemCreationDate = in.readString();
     }
@@ -41,7 +43,7 @@ public class TodoItem extends BaseModel implements Parcelable {
     // For Parceler
     public TodoItem() { }
 
-    public TodoItem(String itemId, String itemName, String itemPriority, String itemDueDate, String itemCreationDate) {
+    public TodoItem(String itemId, String itemName, Priority itemPriority, String itemDueDate, String itemCreationDate) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemPriority = itemPriority;
@@ -69,7 +71,7 @@ public class TodoItem extends BaseModel implements Parcelable {
         this.itemName = itemName;
     }
 
-    public void setItemPriority(String itemPriority) {
+    public void setItemPriority(Priority itemPriority) {
         this.itemPriority = itemPriority;
     }
 
@@ -89,7 +91,7 @@ public class TodoItem extends BaseModel implements Parcelable {
         return itemName;
     }
 
-    public String getItemPriority() {
+    public Priority getItemPriority() {
         return itemPriority;
     }
 
@@ -110,7 +112,7 @@ public class TodoItem extends BaseModel implements Parcelable {
     public void writeToParcel(android.os.Parcel dest, int flags) {
         dest.writeString(itemId);
         dest.writeString(itemName);
-        dest.writeString(itemPriority);
+        dest.writeString(itemPriority.name());
         dest.writeString(itemDueDate);
         dest.writeString(itemCreationDate);
     }
