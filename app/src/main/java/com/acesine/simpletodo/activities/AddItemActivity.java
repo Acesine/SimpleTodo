@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 
 import com.acesine.simpletodo.R;
@@ -14,22 +13,13 @@ import com.acesine.simpletodo.persistent.TodoItem;
 
 import java.util.UUID;
 
-public class EditItemActivity extends AppCompatActivity {
+public class AddItemActivity extends AppCompatActivity {
     public final static int EDIT_ITEM_RESULT_CODE = 1;
-
-    private TodoItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_item);
-
-        item = getIntent().getExtras().getParcelable(MainActivity.ITEM_DATA);
-        if (item.getItemName() != null) {
-            EditText et = (EditText) findViewById(R.id.editText);
-            et.setText(item.getItemName());
-            et.setSelection(item.getItemName().length());
-        }
+        setContentView(R.layout.activity_add_item);
     }
 
     @Override
@@ -44,10 +34,9 @@ public class EditItemActivity extends AppCompatActivity {
         int id = it.getItemId();
 
         if (id == R.id.save_item) {
-            String newName = ((EditText)findViewById(R.id.editText)).getText().toString();
-            item.setItemName(newName);
+            String itemName = ((EditText) findViewById(R.id.etNewItem)).getText().toString();
+            TodoItem item = new TodoItem(UUID.randomUUID().toString(), itemName);
             Intent result = new Intent();
-            result.putExtra(MainActivity.ITEM_POSITION, getIntent().getExtras().getInt(MainActivity.ITEM_POSITION));
             result.putExtra(MainActivity.ITEM_DATA, item);
             setResult(EDIT_ITEM_RESULT_CODE, result);
             finish();

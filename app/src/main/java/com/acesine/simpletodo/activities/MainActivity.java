@@ -3,10 +3,12 @@ package com.acesine.simpletodo.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.acesine.simpletodo.R;
@@ -16,13 +18,13 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     public final static String ITEM_POSITION = "item_position";
     public final static String ITEM_DATA = "item_data";
 
     private final static int EDIT_ITEM_REQUEST_CODE = 1;
+    private final static int ADD_ITEM_REQUEST_CODE = 2;
 
     List<TodoItem> items;
     ArrayAdapter<TodoItem> itemsAdapter;
@@ -41,12 +43,22 @@ public class MainActivity extends AppCompatActivity {
         setupListViewListener();
     }
 
-    public void onAddItem(View view) {
-        EditText et = (EditText) findViewById(R.id.etNewItem);
-        TodoItem item = new TodoItem(UUID.randomUUID().toString(), et.getText().toString());
-        itemsAdapter.add(item);
-        et.setText("");
-        writeItems();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.add_item) {
+            Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
+            startActivityForResult(intent, ADD_ITEM_REQUEST_CODE);
+        }
+        return true;
     }
 
     @Override
@@ -55,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             int pos = data.getExtras().getInt(ITEM_POSITION);
             TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
             items.set(pos, newItem);
+            itemsAdapter.notifyDataSetChanged();
+            writeItems();
+        } else if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == AddItemActivity.EDIT_ITEM_RESULT_CODE) {
+            TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
+            items.add(newItem);
             itemsAdapter.notifyDataSetChanged();
             writeItems();
         }
