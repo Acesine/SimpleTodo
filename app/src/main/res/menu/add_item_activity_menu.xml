@@ -5,6 +5,12 @@
         android:id="@+id/save_item"
         android:title="@string/btn_save"
         android:icon="@mipmap/menu_save_item"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/cancel_item"
+        android:title="@string/btn_cancel"
+        android:icon="@mipmap/menu_cancel"
+        app:showAsAction="ifRoom">
     </item>
 </menu>

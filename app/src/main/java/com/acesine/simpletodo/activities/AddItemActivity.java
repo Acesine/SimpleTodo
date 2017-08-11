@@ -13,8 +13,11 @@ import com.acesine.simpletodo.persistent.TodoItem;
 
 import java.util.UUID;
 
+import static com.acesine.simpletodo.activities.EditItemActivity.EDIT_ITEM_CANCEL_CODE;
+
 public class AddItemActivity extends AppCompatActivity {
-    public final static int EDIT_ITEM_RESULT_CODE = 1;
+    public final static int ADD_ITEM_COMPLETE_CODE = 1;
+    public final static int ADD_ITEM_CANCEL_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,10 @@ public class AddItemActivity extends AppCompatActivity {
             TodoItem item = new TodoItem(UUID.randomUUID().toString(), itemName);
             Intent result = new Intent();
             result.putExtra(MainActivity.ITEM_DATA, item);
-            setResult(EDIT_ITEM_RESULT_CODE, result);
+            setResult(ADD_ITEM_COMPLETE_CODE, result);
+            finish();
+        } else if (id == R.id.cancel_item) {
+            setResult(ADD_ITEM_CANCEL_CODE, new Intent());
             finish();
         }
         return true;

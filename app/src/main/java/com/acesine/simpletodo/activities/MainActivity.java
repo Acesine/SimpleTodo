@@ -63,17 +63,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EDIT_ITEM_REQUEST_CODE && resultCode == EditItemActivity.EDIT_ITEM_RESULT_CODE) {
-            int pos = data.getExtras().getInt(ITEM_POSITION);
-            TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
-            items.set(pos, newItem);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
-        } else if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == AddItemActivity.EDIT_ITEM_RESULT_CODE) {
-            TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
-            items.add(newItem);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+        if (requestCode == EDIT_ITEM_REQUEST_CODE) {
+            if (resultCode == EditItemActivity.EDIT_ITEM_COMPLETE_CODE) {
+                int pos = data.getExtras().getInt(ITEM_POSITION);
+                TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
+                items.set(pos, newItem);
+                itemsAdapter.notifyDataSetChanged();
+                writeItems();
+            } else if (resultCode == EditItemActivity.EDIT_ITEM_CANCEL_CODE) {
+                // Do nothing
+            }
+        } else if (requestCode == ADD_ITEM_REQUEST_CODE) {
+            if (resultCode == AddItemActivity.ADD_ITEM_COMPLETE_CODE) {
+                TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
+                items.add(newItem);
+                itemsAdapter.notifyDataSetChanged();
+                writeItems();
+            } else if (resultCode == AddItemActivity.ADD_ITEM_CANCEL_CODE) {
+                // Do nothing
+            }
         }
     }
 

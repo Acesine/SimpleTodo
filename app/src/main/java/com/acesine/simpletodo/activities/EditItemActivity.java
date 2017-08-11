@@ -15,7 +15,8 @@ import com.acesine.simpletodo.persistent.TodoItem;
 import java.util.UUID;
 
 public class EditItemActivity extends AppCompatActivity {
-    public final static int EDIT_ITEM_RESULT_CODE = 1;
+    public final static int EDIT_ITEM_COMPLETE_CODE = 1;
+    public final static int EDIT_ITEM_CANCEL_CODE = 2;
 
     private TodoItem item;
 
@@ -49,7 +50,10 @@ public class EditItemActivity extends AppCompatActivity {
             Intent result = new Intent();
             result.putExtra(MainActivity.ITEM_POSITION, getIntent().getExtras().getInt(MainActivity.ITEM_POSITION));
             result.putExtra(MainActivity.ITEM_DATA, item);
-            setResult(EDIT_ITEM_RESULT_CODE, result);
+            setResult(EDIT_ITEM_COMPLETE_CODE, result);
+            finish();
+        } else if (id == R.id.cancel_item) {
+            setResult(EDIT_ITEM_CANCEL_CODE, new Intent());
             finish();
         }
         return true;

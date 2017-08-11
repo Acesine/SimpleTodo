@@ -4,5 +4,6 @@
     <string name="edit_new_item_hint">Enter a new item</string>
     <string name="edit_item">Edit Item Below:</string>
     <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
     <string name="task_name">TaskName</string>
 </resources>
