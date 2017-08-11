@@ -17,14 +17,13 @@ public class SpinnerUtils {
     private SpinnerUtils() {}
 
     public static void setupPrioritySpinner(Activity activity, String defaultPriority) {
-        if (defaultPriority == null) defaultPriority = Constants.PRIORITY_COLOR.keySet().iterator().next();
+        if (defaultPriority == null) defaultPriority = Constants.PRIORITY.get(0);
         Spinner spinner = (Spinner) activity.findViewById(R.id.prioritySpinner);
-        List<String> priorities = new ArrayList<>(Constants.PRIORITY_COLOR.keySet());
-        ArrayAdapter<String> aa = new ArrayAdapter<>(activity,android.R.layout.simple_spinner_item, priorities);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(activity,android.R.layout.simple_spinner_item, Constants.PRIORITY);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(aa);
 
-        spinner.setSelection(priorities.indexOf(defaultPriority), true);
+        spinner.setSelection(Constants.PRIORITY.indexOf(defaultPriority), true);
         for (int pos=0; pos<spinner.getChildCount(); ++pos) {
             View v = spinner.getSelectedView();
             v.setBackgroundColor(Constants.PRIORITY_COLOR.get(((TextView) v).getText().toString()));

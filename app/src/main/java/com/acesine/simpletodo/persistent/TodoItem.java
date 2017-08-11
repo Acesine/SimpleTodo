@@ -9,6 +9,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.parceler.Parcel;
 
+import java.util.Date;
+
 @Table(database = TodoItemDatabase.class)
 @Parcel(analyze={TodoItem.class})
 public class TodoItem extends BaseModel implements Parcelable {
@@ -22,19 +24,29 @@ public class TodoItem extends BaseModel implements Parcelable {
     @Column
     private String itemPriority;
 
+    @Column
+    private String itemDueDate;
+
+    @Column
+    private String itemCreationDate;
+
     protected TodoItem(android.os.Parcel in) {
         itemId = in.readString();
         itemName = in.readString();
         itemPriority = in.readString();
+        itemDueDate = in.readString();
+        itemCreationDate = in.readString();
     }
 
     // For Parceler
     public TodoItem() { }
 
-    public TodoItem(String itemId, String itemName, String itemPriority) {
+    public TodoItem(String itemId, String itemName, String itemPriority, String itemDueDate, String itemCreationDate) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemPriority = itemPriority;
+        this.itemDueDate = itemDueDate;
+        this.itemCreationDate = itemCreationDate;
     }
 
     public static final Creator<TodoItem> CREATOR = new Creator<TodoItem>() {
@@ -61,6 +73,14 @@ public class TodoItem extends BaseModel implements Parcelable {
         this.itemPriority = itemPriority;
     }
 
+    public void setItemDueDate(String itemDueDate) {
+        this.itemDueDate = itemDueDate;
+    }
+
+    public void setItemCreationDate(String itemCreationDate) {
+        this.itemCreationDate = itemCreationDate;
+    }
+
     public String getItemId() {
         return itemId;
     }
@@ -73,6 +93,14 @@ public class TodoItem extends BaseModel implements Parcelable {
         return itemPriority;
     }
 
+    public String getItemDueDate() {
+        return itemDueDate;
+    }
+
+    public String getItemCreationDate() {
+        return itemCreationDate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -83,5 +111,7 @@ public class TodoItem extends BaseModel implements Parcelable {
         dest.writeString(itemId);
         dest.writeString(itemName);
         dest.writeString(itemPriority);
+        dest.writeString(itemDueDate);
+        dest.writeString(itemCreationDate);
     }
 }

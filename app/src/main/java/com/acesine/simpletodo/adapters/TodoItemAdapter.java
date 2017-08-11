@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.acesine.simpletodo.Constants;
 import com.acesine.simpletodo.R;
 import com.acesine.simpletodo.persistent.TodoItem;
+import com.acesine.simpletodo.utils.DateTimeUtils;
 
+import java.text.ParseException;
 import java.util.List;
 
 public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
@@ -27,6 +29,13 @@ public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
         TextView itemName = (TextView) convertView.findViewById(R.id.item_name);
         itemName.setText(item.getItemName());
         itemName.setBackgroundColor(Constants.PRIORITY_COLOR.get(item.getItemPriority()));
+        TextView timeToDue = (TextView) convertView.findViewById(R.id.time_to_due);
+        timeToDue.setBackgroundColor(Constants.PRIORITY_COLOR.get(item.getItemPriority()));
+        try {
+            timeToDue.setText(DateTimeUtils.getTimeToDue(Constants.DATE_FORMAT.parse(item.getItemDueDate())));
+        } catch (ParseException e) {
+            //
+        }
         return convertView;
     }
 }

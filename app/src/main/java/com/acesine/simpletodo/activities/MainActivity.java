@@ -11,13 +11,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.acesine.simpletodo.Constants;
 import com.acesine.simpletodo.R;
 import com.acesine.simpletodo.adapters.TodoItemAdapter;
 import com.acesine.simpletodo.persistent.TodoItem;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     public final static String ITEM_POSITION = "item_position";
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     List<TodoItem> items;
     ArrayAdapter<TodoItem> itemsAdapter;
     ListView lvItems;
+    private Timer timer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,32 @@ public class MainActivity extends AppCompatActivity {
         itemsAdapter = new TodoItemAdapter(this, items);
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
+    }
+
+    @Override
+    protected void onResume() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        itemsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }, 0, 60000);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        super.onPause();
     }
 
     @Override
@@ -69,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                     int pos = data.getExtras().getInt(ITEM_POSITION);
                     TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
                     items.set(pos, newItem);
-                    itemsAdapter.notifyDataSetChanged();
                     writeItems();
+                    itemsAdapter.notifyDataSetChanged();
                     break;
                 case EditItemActivity.EDIT_ITEM_CANCEL_CODE:
                     break;
@@ -80,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     items.remove(pos);
-                    itemsAdapter.notifyDataSetChanged();
                     writeItems();
+                    itemsAdapter.notifyDataSetChanged();
                     break;
             }
         } else if (requestCode == ADD_ITEM_REQUEST_CODE) {
@@ -89,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 case AddItemActivity.ADD_ITEM_COMPLETE_CODE:
                     TodoItem newItem = data.getExtras().getParcelable(ITEM_DATA);
                     items.add(newItem);
-                    itemsAdapter.notifyDataSetChanged();
                     writeItems();
+                    itemsAdapter.notifyDataSetChanged();
                     break;
                 case AddItemActivity.ADD_ITEM_CANCEL_CODE:
                     break;
@@ -126,11 +158,22 @@ public class MainActivity extends AppCompatActivity {
         items = SQLite.select().
                 from(TodoItem.class).
                 queryList();
+        sortTodoItems();
     }
 
     private void writeItems() {
+        sortTodoItems();
         for (TodoItem item : items) {
             item.save();
         }
+    }
+
+    private void sortTodoItems() {
+        Collections.sort(items, new Comparator<TodoItem>() {
+            @Override
+            public int compare(TodoItem o1, TodoItem o2) {
+                return Constants.PRIORITY.indexOf(o1.getItemPriority()) - Constants.PRIORITY.indexOf(o2.getItemPriority());
+            }
+        });
     }
 }

@@ -8,6 +8,7 @@
     <string name="btn_delete">Delete</string>
     <string name="task_name">TaskName</string>
     <string name="priority">Priority</string>
+    <string name="due_date">DueDate</string>
 
     <string-array name="spinnerItems">
         <item>High</item>
