@@ -1,4 +1,4 @@
-package com.acesine.simpletodo;
+package com.acesine.simpletodo.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;

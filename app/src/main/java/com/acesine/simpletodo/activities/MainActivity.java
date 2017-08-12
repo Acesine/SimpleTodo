@@ -131,17 +131,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupListViewListener() {
-        lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!items.get(position).delete()) {
-                    return false;
-                }
-                items.remove(position);
-                itemsAdapter.notifyDataSetChanged();
-                return true;
-            }
-        });
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

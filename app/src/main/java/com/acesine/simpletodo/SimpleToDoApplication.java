@@ -2,6 +2,7 @@ package com.acesine.simpletodo;
 
 import android.app.Application;
 
+import com.acesine.simpletodo.utils.TypefaceUtil;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
