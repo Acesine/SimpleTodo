@@ -32,7 +32,15 @@ public class DateTimeUtils {
         if (diff <= 0) {
             return "Over due!";
         }
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
-        return String.format(Locale.US, "%d min left", minutes);
+        long days = TimeUnit.MILLISECONDS.toDays(diff);
+        long hours = TimeUnit.MILLISECONDS.toHours(diff - TimeUnit.DAYS.toMillis(days));
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(diff - TimeUnit.DAYS.toMillis(days) - TimeUnit.HOURS.toMillis(hours));
+        if (days > 0) {
+            return String.format(Locale.US, "%d d %d h %d m left", days, hours, minutes);
+        } else if (hours > 0) {
+            return String.format(Locale.US, "%d h %d m left", hours, minutes);
+        } else {
+            return String.format(Locale.US, "%d m left", minutes);
+        }
     }
 }
