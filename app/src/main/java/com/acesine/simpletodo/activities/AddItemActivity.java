@@ -29,6 +29,8 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
 
         SpinnerUtils.setupPrioritySpinner(this, null);
+        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
+        tp.setIs24HourView(true);
     }
 
     @Override

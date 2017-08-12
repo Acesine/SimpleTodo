@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.acesine.simpletodo.Constants;
@@ -14,6 +15,7 @@ import com.acesine.simpletodo.persistent.TodoItem;
 import com.acesine.simpletodo.utils.DateTimeUtils;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
@@ -43,6 +45,22 @@ public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
                 //
             }
         }
+        try {
+            setProgress(convertView, Constants.DATE_FORMAT.parse(item.getItemCreationDate()), Constants.DATE_FORMAT.parse(item.getItemDueDate()));
+        } catch (ParseException e) {
+            //
+        }
         return convertView;
+    }
+
+    private void setProgress(View parent, Date start, Date due) {
+        Date now = new Date();
+        long diff = due.getTime() - now.getTime();
+        int progress = 100;
+        if (diff > 0) {
+            progress = (int) (100.0 * (now.getTime() - start.getTime()) / (due.getTime() - start.getTime()));
+        }
+        ProgressBar pb = (ProgressBar) parent.findViewById(R.id.item_progress);
+        pb.setProgress(progress, true);
     }
 }
